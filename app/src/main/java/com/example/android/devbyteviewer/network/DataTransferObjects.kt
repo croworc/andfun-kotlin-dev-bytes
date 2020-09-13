@@ -29,7 +29,7 @@ import com.squareup.moshi.JsonClass
 /**
  * VideoHolder holds a list of Videos.
  *
- * This is to parse first level of our network result which looks like
+ * This is to parse the first level of our network result which looks like
  *
  * {
  *   "videos": []
