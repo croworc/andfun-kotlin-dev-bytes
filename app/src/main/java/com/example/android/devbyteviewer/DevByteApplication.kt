@@ -17,13 +17,13 @@
 
 package com.example.android.devbyteviewer
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import timber.log.Timber
 
 /**
  * Override application to setup background work via WorkManager
  */
-class DevByteApplication : Application() {
+class DevByteApplication : MultiDexApplication() {
 
     /**
      * onCreate is called before the first screen is shown to the user.
