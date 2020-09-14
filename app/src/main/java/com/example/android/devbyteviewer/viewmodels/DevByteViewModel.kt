@@ -29,10 +29,10 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 /**
- * DevByteViewModel designed to store and manage UI-related data in a lifecycle conscious way. This
- * allows data to survive configuration changes such as screen rotations. In addition, background
- * work such as fetching network results can continue through configuration changes and deliver
- * results after the new Fragment or Activity is available.
+ * DevByteViewModel is designed to store and manage UI-related data in a lifecycle conscious way.
+ * This allows data to survive configuration changes such as screen rotations.
+ * In addition, background work such as fetching network results can continue through configuration
+ * changes and deliver results after the new Fragment or Activity is available.
  *
  * @param application The application that this viewmodel is attached to, it's safe to hold a
  * reference to applications across rotation since Application is never recreated during actiivty
