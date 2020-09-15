@@ -26,6 +26,11 @@ import retrofit2.HttpException
 
 class RefreshDataWorker(appContext: Context, params: WorkerParameters)
     : CoroutineWorker(appContext, params) {
+
+    companion object  {
+        const val WORK_NAME = "RefreshDataWorker"
+    }
+
     override suspend fun doWork(): Result {
         val db = getDatabase(applicationContext)
         val repository = VideosRepository(db)
