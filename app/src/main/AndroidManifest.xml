@@ -22,6 +22,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.google.android.youtube" />
+    </queries>
+
     <application
         android:name=".DevByteApplication"
         android:allowBackup="true"
