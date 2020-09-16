@@ -26,8 +26,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-//import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +52,6 @@ class DevByteFragment : Fragment() {
         //The ViewModelProviders (plural) is deprecated.  
         //ViewModelProviders.of(this, DevByteViewModel.Factory(activity.application)).get(DevByteViewModel::class.java)
         ViewModelProvider(this, DevByteViewModel.Factory(activity.application)).get(DevByteViewModel::class.java)
-                
     }
 
     /**
@@ -70,7 +67,7 @@ class DevByteFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.playlist.observe(viewLifecycleOwner, Observer<List<Video>> { videos ->
+        viewModel.playlist.observe(viewLifecycleOwner, { videos ->
             videos?.apply {
                 viewModelAdapter?.videos = videos
             }
@@ -95,13 +92,14 @@ class DevByteFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         val binding: FragmentDevByteBinding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_dev_byte,
                 container,
                 false)
         // Set the lifecycleOwner so DataBinding can observe LiveData
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.viewModel = viewModel
 
@@ -122,7 +120,8 @@ class DevByteFragment : Fragment() {
             startActivity(intent)
         })
 
-        binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
+        // Set up the RecyclerView w/ a new LinearLayoutManager and the DevByteAdapter
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
         }
@@ -156,7 +155,7 @@ class VideoClick(val block: (Video) -> Unit) {
 /**
  * RecyclerView Adapter for setting up data binding on the items in the list.
  */
-class DevByteAdapter(val callback: VideoClick) : RecyclerView.Adapter<DevByteViewHolder>() {
+class DevByteAdapter(private val callback: VideoClick) : RecyclerView.Adapter<DevByteViewHolder>() {
 
     /**
      * The videos that our Adapter will show
