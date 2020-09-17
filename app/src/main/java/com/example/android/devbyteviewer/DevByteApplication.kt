@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit
  */
 class DevByteApplication : Application() {
 
-    val applicationScope = CoroutineScope(Dispatchers.Default)
+    private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     private fun delayedInit() {
         applicationScope.launch {
@@ -42,7 +42,7 @@ class DevByteApplication : Application() {
 
     private fun setupRecurringWork() {
         val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .setRequiredNetworkType(NetworkType.UNMETERED) // must have Wi-Fi
                 .setRequiresBatteryNotLow(true)
                 .setRequiresCharging(true)
                 .apply {
@@ -56,7 +56,7 @@ class DevByteApplication : Application() {
                 .setConstraints(constraints)
                 .build()
 
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 RefreshDataWorker.WORK_NAME,
                 ExistingPeriodicWorkPolicy.KEEP,
                 repeatingRequest)
