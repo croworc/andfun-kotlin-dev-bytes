@@ -31,6 +31,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        // Required when setting minSdkVersion to 20 or lower
         multiDexEnabled true
     }
 
@@ -47,6 +48,9 @@ android {
 
     // Enable using Java 8 features
     compileOptions {
+        // flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+        // Sets Java compatibility to Java 8
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -62,6 +66,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
     // Support libraries
     implementation "androidx.appcompat:appcompat:$version_appcompat"
